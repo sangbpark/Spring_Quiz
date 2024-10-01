@@ -18,11 +18,20 @@ public class RealEstateBO {
 		return realEstateMapper.selectRealEstateById(id);
 	}
 	
-	public List<RealEstate> getRealEstateListByRentPrice(Integer rent_price) {
-		return realEstateMapper.selectRealEstateListByRentPrice(rent_price);
+	public List<RealEstate> getRealEstateListByRentPrice(Integer rentPrice) {
+		return realEstateMapper.selectRealEstateListByRentPrice(rentPrice);
 	}
 	
-	public List<RealEstate> getRealEstateListByAreaByPrice(int area, int price) {
-		return realEstateMapper.selectRealEstateListByAreaByPrice(area, price);
+	public List<RealEstate> getRealEstateListByAreaAndPrice(int area, int price) {
+		return realEstateMapper.selectRealEstateListByAreaAndPrice(area, price);
+	}
+	
+	public int addRealEstate(RealEstate realEstate) {
+		return realEstateMapper.insertRealEstate(realEstate);
+	}
+	
+	public int addRealEstateAsField(int realtorId, String address, 
+			int area, String type, int price, Integer rentPrice) {
+		return realEstateMapper.insertRealEstateAsField(realtorId, address, area, type, price, rentPrice);
 	}
 }
