@@ -31,21 +31,22 @@ public class Lesson04Quiz01Controller {
 	public String addSeller(
 			@RequestParam("nickname") String nickname,
 			@RequestParam(value = "profileImageUrl", required = false) String profileImageUrl,
-			@RequestParam("temperature") double temperature
+			@RequestParam(value = "temperature", defaultValue = "36.5") double temperature
 			) {
-			
+		// TODO 아직 할게 있다면 이런 주석을 남김
 		sellerBO.addSeller(nickname, profileImageUrl, temperature);
 		return "lesson04/afterAddSeller";
 	}
 	
 	@GetMapping("/seller-info-view")
-	public String getSellerInfoRecentlyAdd(Model model, 
+	public String sellerInfoView(Model model, 
 			@RequestParam("id") Optional<Integer> id) {// Optional null확인 spring에서 Optional을 사용하면 required쓸 필요없음
 		// 메소드 참조 sellerBO::
 		Seller seller = id.map(sellerBO::getSellerById). // or (value -> sellerBO.getSellerById(value))
-				orElseGet(sellerBO::getSellerRecentlyInsert); // or (() -> sellerBO.getSellerRecentlyInsert())
+				orElseGet(sellerBO::getLatestSeller); // or (() -> sellerBO.getSellerRecentlyInsert())
 	
 		model.addAttribute("seller", seller);
+		model.addAttribute("title", "판매자 정보");
 	
 		return "lesson04/sellerInfo";
 	}

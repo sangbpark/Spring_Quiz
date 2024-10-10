@@ -23,7 +23,7 @@
  		)
  	</insert>
  	
- 	<select id="selectSellerRecentlyInsert"
+ 	<select id="selectLatestSeller"
  	resultType="com.quiz.lesson04.domain.Seller">
  		SELECT
  			`id`

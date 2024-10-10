@@ -13,6 +13,6 @@ public interface SellerMapper {
 			@Param("profileImageUrl") String profileImageUrl,
 			@Param("temperature") double temperature);
 	
-	public Seller selectSellerRecentlyInsert();
+	public Seller selectLatestSeller();
 	public Seller selectSellerById(int id);
 }
