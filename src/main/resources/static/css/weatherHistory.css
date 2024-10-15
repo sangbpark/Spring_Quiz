@@ -1,3 +1,17 @@
 @charset "UTF-8";
 
-.contents {witdh:"500px"; min-height:"1200px";}
+#wrap {width:1600px;}
+
+footer {height:150px;}
+
+#right-contents {width:1400px;}
+
+#left-contents {background-color:cornflowerblue;}
+
+#logo {height:100px;}
+
+#weatherlist {width:1200px;}
+
+.weatherinput {height:250px;}
+
+.contents {min-height:500px;}

@@ -2,21 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>날씨 정보</title>
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <link href="/css/weatherHistory.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="wrab" class="container">
-		<section class="contents d-flex bg-warning">
-			
-		
+	<div id="wrap">
+		<section class="contents d-flex">
+			<article id="left-contents" class="col-2">				
+				<div id="logo" class="d-flex justify-content-center align-items-center"><a href="#"><img src="/image/weather/foot_logo2.png" alt="기상청 로고 이미지" width="150px"></a></div>			
+				<nav id="weatherNav" >
+					<ul class="nav nav-fill w-100">
+						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >날씨</a></li>
+						<li class="nav-item w-100"><a href="/weather_history/add-weather-view" class="nav-link text-white text-left" >날씨입력</a></li>
+						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >테마날씨</a></li>
+						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >관측 기후</a></li>
+					</ul>
+				</nav>
+			</article>
+			<article id="right-contents" class="d-flex justify-content-center">
+				<div id="weatherlist" class="my-3">
+					<h1>과거 날씨</h1>
+					<table class="table text-center">
+						<thead>
+							<tr>
+								<th>날짜</th>
+								<th>날씨</th>
+								<th>기온</th>
+								<th>강수량</th>
+								<th>미세먼지</th>
+								<th>풍속</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="weather : ${weatherhistory}">
+								<td th:text="${#temporals.format(weather.date, 'yyyy년 M월 d일')}">2015년 7월 1일</td>
+								<td th:switch="${weather.weather}">
+									<span th:case="비"><img src="/image/weather/rainy.jpg" alt="날씨 이미지"></span>
+									<span th:case="흐림"><img src="/image/weather/cloudy.jpg" alt="날씨 이미지"></span>
+									<span th:case="맑음"><img src="/image/weather/sunny.jpg" alt="날씨 이미지"></span>
+									<span th:case="구름조금"><img src="/image/weather/partlyCloudy.jpg" alt="날씨 이미지"></span>
+								</td>
+								<td th:text="${weather.temperatures} + '&#8451'">기온</td>
+								<td th:text="${weather.precipitation} + 'mm'">강수량</td>
+								<td th:text="${weather.microDust}">미세먼지</td>
+								<td th:text="${weather.windSpeed} + 'km/h'">풍속</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</article>
 		</section>
-		<footer></footer>
-	
+		<footer class="text-secondary d-flex align-items-center">
+			<div id="logo" class="d-flex justify-content-center align-items-center ml-3"><img src="/image/weather/foot_logo2.png" alt="기상청 로고 이미지" width="150px"></div>			
+			<div class="ml-3">
+				<div><small>(07062) 서울시 동작구 여의대방로16길 61</small></div>
+				<div><small>Copyright@2024 KMA, All Rights RESERVED.</small></div>
+			</div>
+		</footer>
 	</div>
-
 </body>
 </html>

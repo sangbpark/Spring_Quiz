@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<head>
+    <meta charset="utf-8">
+    <title>날씨 정보</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <link href="/css/weatherHistory.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="wrap">
+		<section class="contents d-flex">
+			<article id="left-contents" class="col-2">				
+				<div id="logo" class="d-flex justify-content-center align-items-center"><a href="#"><img src="/image/weather/foot_logo2.png" alt="기상청 로고 이미지" width="150px"></a></div>			
+				<nav id="weatherNav" >
+					<ul class="nav nav-fill w-100">
+						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >날씨</a></li>
+						<li class="nav-item w-100"><a href="/weather_history/add-weather-view" class="nav-link text-white text-left" >날씨입력</a></li>
+						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >테마날씨</a></li>
+						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >관측 기후</a></li>
+					</ul>
+				</nav>
+			</article>
+			<article id="right-contents" class="d-flex justify-content-center">
+				<div id="weatherlist" class="my-3">
+					<h1>날씨 입력</h1>
+					<div class="weatherinput ml-5 mt-5">
+						<form method="post" action="/weather_history/addWeather">
+							<div class="d-flex align-items-center justify-content-between mb-5">
+								<div class="d-flex align-items-center col-4 p-0">
+									<label for="date" class="m-0">날짜</label>
+									<input type="text" id="date" name="date" class="form-control col-10 ml-2">
+								</div>
+								<div class="d-flex align-items-center col-3">
+									<label for="weather" class="m-0">날씨</label>
+									<select id="weather" name="weather" class="form-control ml-2 col-8">
+										<option value="맑음" selected>맑음</option>
+										<option value="비">비</option>
+										<option value="구름조금">구름조금</option>
+										<option value="흐림">흐림</option>
+									</select>
+								</div>
+								<div class="d-flex align-items-center col-3 p-0">
+									<label for="microDust" class="m-0">미세먼지</label>
+									<select id="microDust" name="microDust" class="form-control col-9 ml-2">
+										<option value="보통" selected>보통</option>
+										<option value="좋음">좋음</option>
+										<option value="나쁨">나쁨</option>
+										<option value="최악">최악</option>
+									</select>
+								</div>
+							</div>
+							<div class="d-flex align-items-center justify-content-between pt-5 mb-3">
+								<div class="input-group col-3 p-0">
+									<label for="temperatures">기온</label>
+									<input type="text" id="temperatures" name="temperatures" class="form-control ml-2">
+									<div class="input-group-append">
+									  <span class="input-group-text">&#8451</span>
+									</div>
+								</div>
+								<div class="input-group col-3 p-0">
+									<label for="precipitation">강수량</label>
+									<input type="text" id="precipitation" name="precipitation" class="form-control ml-2">
+									<div class="input-group-append">
+									  <span class="input-group-text">mm</span>
+									</div>
+								</div>
+								<div class="input-group col-3 p-0">
+									<label for="windSpeed">풍속</label>
+									<input type="text" id="windSpeed" name="windSpeed" class="form-control ml-2">
+									<div class="input-group-append">
+									  <span class="input-group-text">km/h</span>
+									</div>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end">
+								<input type="submit" class="btn btn-success" value="저장">
+							</div>
+						</form>
+					</div>
+				</div>
+			</article>
+		</section>
+		<footer class="text-secondary d-flex align-items-center">
+			<div id="logo" class="d-flex justify-content-center align-items-center ml-3"><img src="/image/weather/foot_logo2.png" alt="기상청 로고 이미지" width="150px"></div>			
+			<div class="ml-3">
+				<div><small>(07062) 서울시 동작구 여의대방로16길 61</small></div>
+				<div><small>Copyright@2024 KMA, All Rights RESERVED.</small></div>
+			</div>
+		</footer>
+	</div>
+</body>
+</html>
