@@ -9,6 +9,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     <link href="/css/weatherHistory.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -17,7 +19,7 @@
 				<div id="logo" class="d-flex justify-content-center align-items-center"><a href="#"><img src="/image/weather/foot_logo2.png" alt="기상청 로고 이미지" width="150px"></a></div>			
 				<nav id="weatherNav" >
 					<ul class="nav nav-fill w-100">
-						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >날씨</a></li>
+						<li class="nav-item w-100"><a href="/weather_history/weather-list-view" class="nav-link text-white text-left" >날씨</a></li>
 						<li class="nav-item w-100"><a href="/weather_history/add-weather-view" class="nav-link text-white text-left" >날씨입력</a></li>
 						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >테마날씨</a></li>
 						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >관측 기후</a></li>
@@ -28,7 +30,7 @@
 				<div id="weatherlist" class="my-3">
 					<h1>날씨 입력</h1>
 					<div class="weatherinput ml-5 mt-5">
-						<form method="post" action="/weather_history/addWeather">
+						<form method="post" action="/weather_history/add-weather">
 							<div class="d-flex align-items-center justify-content-between mb-5">
 								<div class="d-flex align-items-center col-4 p-0">
 									<label for="date" class="m-0">날짜</label>
@@ -77,14 +79,14 @@
 								</div>
 							</div>
 							<div class="d-flex justify-content-end">
-								<input type="submit" class="btn btn-success" value="저장">
+								<input type="submit" class="btn btn-success" id="button" value="저장">
 							</div>
 						</form>
 					</div>
 				</div>
 			</article>
 		</section>
-		<footer class="text-secondary d-flex align-items-center">
+		<footer class="copyright text-secondary d-flex align-items-center">
 			<div id="logo" class="d-flex justify-content-center align-items-center ml-3"><img src="/image/weather/foot_logo2.png" alt="기상청 로고 이미지" width="150px"></div>			
 			<div class="ml-3">
 				<div><small>(07062) 서울시 동작구 여의대방로16길 61</small></div>
@@ -92,5 +94,50 @@
 			</div>
 		</footer>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			  $.datepicker.setDefaults({
+                  dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] // 요일을 한글로 변경
+                  , dateFormat: 'yy-mm-dd'
+                  , maxDate: new Date()
+			  	  ,	changeMonth: true
+			 	  ,	changeYear: true          
+			 	  , showMonthAfterYear: true
+              });
+			  
+			  $('input[name=date]').datepicker({
+				  
+			  });
+			  
+			  $('#button').on('click', function(){
+				  if(!$('#date').val()) {
+					  alert("날짜를 입력하세요");
+					  return false;
+				  }
+				  if(!$('#weather').val()) {
+					  alert("날씨를 입력하세요");
+					  return false;
+				  }
+				  if(!$('#microDust').val()) {
+					  alert("미세먼지를 입력하세요");
+					  return false;
+				  }
+				  if(!$('#temperatures').val()) {
+					  alert("기온을 입력하세요");
+					  return false;
+				  }
+				  if(!$('#precipitation').val()) {
+					  alert("강수량을 입력하세요");
+					  return false;
+				  }
+				  if(!$('#windSpeed').val()) {
+					  alert("풍속을 입력하세요");
+					  return false;
+				  }
+			  });
+		});
+		
+	</script>
 </body>
 </html>

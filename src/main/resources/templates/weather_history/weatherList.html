@@ -16,7 +16,7 @@
 				<div id="logo" class="d-flex justify-content-center align-items-center"><a href="#"><img src="/image/weather/foot_logo2.png" alt="기상청 로고 이미지" width="150px"></a></div>			
 				<nav id="weatherNav" >
 					<ul class="nav nav-fill w-100">
-						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >날씨</a></li>
+						<li class="nav-item w-100"><a href="/weather_history/weather-list-view" class="nav-link text-white text-left" >날씨</a></li>
 						<li class="nav-item w-100"><a href="/weather_history/add-weather-view" class="nav-link text-white text-left" >날씨입력</a></li>
 						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >테마날씨</a></li>
 						<li class="nav-item w-100"><a href="#" class="nav-link text-white text-left" >관측 기후</a></li>
@@ -38,13 +38,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="weather : ${weatherhistory}">
+							<tr th:each="weather : ${weatherhistoryList}">
 								<td th:text="${#temporals.format(weather.date, 'yyyy년 M월 d일')}">2015년 7월 1일</td>
 								<td th:switch="${weather.weather}">
-									<span th:case="비"><img src="/image/weather/rainy.jpg" alt="날씨 이미지"></span>
-									<span th:case="흐림"><img src="/image/weather/cloudy.jpg" alt="날씨 이미지"></span>
-									<span th:case="맑음"><img src="/image/weather/sunny.jpg" alt="날씨 이미지"></span>
-									<span th:case="구름조금"><img src="/image/weather/partlyCloudy.jpg" alt="날씨 이미지"></span>
+									<span th:case="'비'"><img src="/image/weather/rainy.jpg" alt="비 이미지"></span>
+									<span th:case="'흐림'"><img src="/image/weather/cloudy.jpg" alt="흐림 이미지"></span>
+									<span th:case="'맑음'"><img src="/image/weather/sunny.jpg" alt="맑음 이미지"></span>
+									<span th:case="'구름조금'"><img src="/image/weather/partlyCloudy.jpg" alt="구름조금 이미지"></span>
+									<span th:case="*" th:text="${weather.weather}"></span>
 								</td>
 								<td th:text="${weather.temperatures} + '&#8451'">기온</td>
 								<td th:text="${weather.precipitation} + 'mm'">강수량</td>
@@ -56,7 +57,7 @@
 				</div>
 			</article>
 		</section>
-		<footer class="text-secondary d-flex align-items-center">
+		<footer class="copyright text-secondary d-flex align-items-center">
 			<div id="logo" class="d-flex justify-content-center align-items-center ml-3"><img src="/image/weather/foot_logo2.png" alt="기상청 로고 이미지" width="150px"></div>			
 			<div class="ml-3">
 				<div><small>(07062) 서울시 동작구 여의대방로16길 61</small></div>

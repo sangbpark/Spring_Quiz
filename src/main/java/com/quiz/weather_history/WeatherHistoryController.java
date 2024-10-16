@@ -1,5 +1,6 @@
 package com.quiz.weather_history;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.quiz.weather_history.bo.Weather_historyBO;
 import com.quiz.weather_history.domain.Weather_history;
@@ -17,12 +19,13 @@ import com.quiz.weather_history.domain.Weather_history;
 public class WeatherHistoryController {
 	@Autowired
 	private Weather_historyBO weather_historyBO;
-
+	
+	
 	@GetMapping("/weather-list-view")
 	public String weatherListView(Model model) {
 		
-		List<Weather_history> weather_history = weather_historyBO.getWeather_historyList();
-		model.addAttribute("weatherhistory", weather_history);
+		List<Weather_history> weather_historyList = weather_historyBO.getWeather_historyList();
+		model.addAttribute("weatherhistoryList", weather_historyList);
 		return "weather_history/weatherList";
 	}
 	
@@ -32,8 +35,15 @@ public class WeatherHistoryController {
 	}
 	
 	@PostMapping("/add-weather")
-	public String addweather() {
-		
-		return "weather_history/weatherList";
+	public String addweather( // @DateTimeFormat(pattern = "yyyy-MM-dd") Date date
+			@RequestParam("date") LocalDate date,
+			@RequestParam("weather") String weather,
+			@RequestParam("microDust") String microDust,
+			@RequestParam("temperatures") double temperatures,
+			@RequestParam("precipitation") double precipitation,
+			@RequestParam("windSpeed") double windSpeed
+			) {
+		weather_historyBO.addWeather_history(date, weather, microDust, temperatures, precipitation, windSpeed);
+		return "redirect:/weather_history/weather-list-view";
 	}
 }

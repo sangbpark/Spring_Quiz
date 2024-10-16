@@ -1,10 +1,13 @@
 package com.quiz.weather_history.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Weather_history {
 	private int id;
-	private LocalDateTime date;
+	// @DateTimeFormat(pattern = "yyyy-MM-dd") 
+	// private Date date
+	private LocalDate date;
 	private String weather;
 	private double temperatures;
 	private double precipitation;
@@ -19,10 +22,10 @@ public class Weather_history {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public LocalDateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public String getWeather() {
