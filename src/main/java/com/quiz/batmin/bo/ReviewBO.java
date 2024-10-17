@@ -19,14 +19,17 @@ public class ReviewBO {
 	public List<FindReviewDto> getReviewListByStoreId(int id) {
 		List<Review> review = reviewMapper.selectReviewListByStoreId(id);
 		List<FindReviewDto> frdList = new ArrayList<>();
-		for (Review temp : review) {
-			FindReviewDto frd = new FindReviewDto();
-			frd.setMenu(temp.getMenu());
-			frd.setPoint(pointDivision(temp.getPoint()));
-			frd.setReview(temp.getReview());
-			frd.setUserName(temp.getUserName());
-			frd.setUpdatedAt(temp.getUpdatedAt());
-			frdList.add(frd);
+		
+		if (!review.isEmpty()) {
+			for (Review temp : review) {
+				FindReviewDto frd = new FindReviewDto();
+				frd.setMenu(temp.getMenu());
+				frd.setPoint(pointDivision(temp.getPoint()));
+				frd.setReview(temp.getReview());
+				frd.setUserName(temp.getUserName());
+				frd.setUpdatedAt(temp.getUpdatedAt());
+				frdList.add(frd);
+			}
 		}
 		return frdList;
 	};
