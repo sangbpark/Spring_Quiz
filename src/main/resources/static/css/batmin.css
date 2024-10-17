@@ -1,7 +1,14 @@
 @charset "UTF-8";
 
-header { height:150px;}
+header { height:100px;}
 
-.contents {min-height:400px;}
+.contents {min-height:200px;}
 
 footer {height:200px;}
+
+#wrap { width:600px; margin: 0 auto;}
+
+.contents a {display: block; text-decoration: none; color: inherit;}
+
+
+.noReview { font-size:40px;}

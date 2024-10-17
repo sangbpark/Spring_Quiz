@@ -15,16 +15,27 @@
 			<div class="display-4 ml-5"><a href="#" class="text-white text-decoration-none">배탈의 민족</a></div>
 		</header>
 		<section class="contents py-3">
-			<div class="display-4">우리동네 가게</div>
-			<th:block th:each="store : ${stores}">
-				<a th:href="@{/batmin/reviews(storeId=${store.id},storeName=${store.name})}">
+			<div class="display-4" th:text="${storeName} + ' - 리뷰'">우리동네 가게</div>
+			<div th:if="${reviews.isEmpty()}" class="d-flex justify-content-center align-items-center">
+				<div class="noReview font-weight-bold mt-3" th:text="'작성된 리뷰가 없습니다.'"></div>
+			</div>
+			<div th:unless="${reviews.isEmpty()}">
+				<th:block th:each="review : ${reviews}">
 					<div class="border border-info rounded p-3 mt-3">
-						<h3 th:text="${store.name}"></h3>
-						<div th:text="'전화번호 : ' + ${store.phoneNumber}"></div>
-						<div th:text="'주소 : ' + ${store.address}"></div>
+						<div>
+							<b th:text="${review.userName}"></b>						
+							<th:block th:each="point : ${review.point}">
+								<img th:if="${point == 1.0}" src="/image/batmin/star_fill.png" alt="별" width="20px">
+								<img th:if="${point == 0.5}" src="/image/batmin/star_half.png" alt="반별" width="20px">
+								<img th:if="${point == 0.0}" src="/image/batmin/star_empty.png" alt="빈별" width="20px">
+							</th:block>
+						</div>
+						<div class="text-secondary my-2" th:text="${#temporals.format(review.updatedAt, 'yyyy년 M월 d일')}"></div>
+						<div th:text="${review.review}"></div>
+						<div class="mt-2"><span class="bg-light rounded" th:text="${review.menu}"></span></div>
 					</div>
-				</a>
-			</th:block>
+				</th:block>
+			</div>
 		</section>
 		<footer class="copyright">
 			<hr class="mt-0">
