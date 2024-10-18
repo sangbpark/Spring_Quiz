@@ -1,6 +1,8 @@
 package com.quiz.lesson06;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,13 +28,19 @@ public class Lesson06Quiz01Controller {
 	}
 	
 	// 추가 기능 => AJAX 호출
+	// @ResponseBody가 사용되면 Model을 쓸 수 없다.
 	@ResponseBody
 	@PostMapping("/add-bookmark")
-	public String addBookmark(
+	public Map<String, Object> addBookmark(
 			@RequestParam("name") String name,
 			@RequestParam("url") String url) {
 		bookmarkBO.addBookmark(name, url);
-		return "성공";
+		// 성공 여부 JSON String
+		// "{"code":200, "result":"성공"}"
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		return result;
 	}
 	
 	@GetMapping("/after-add-bookmark-view")
@@ -41,5 +49,29 @@ public class Lesson06Quiz01Controller {
 		List<Bookmark> bookmarkList = bookmarkBO.getBookmarkList();
 		model.addAttribute("bookmarks", bookmarkList);
 		return "lesson06/bookmarkView";
+	}
+	
+	@ResponseBody
+	@GetMapping("/url-Duplicated")
+	public Map<String, Object> isDuplicatedUrl(
+			@RequestParam("url") String url) {
+		
+		boolean isDuplicatedUrl = bookmarkBO.isDuplicatedUrl(url);
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("is_duplicated_url", isDuplicatedUrl);
+		return result;
+	}
+	
+	@ResponseBody
+	@GetMapping("/delete-bookmark")
+	public Map<String, Object> afterAddBookmarkView(
+			@RequestParam("url") String url) {
+		
+		boolean isDeleted = bookmarkBO.removeBookmark(url);
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("is_deleted_bookmark", isDeleted);
+		return result;
 	}
 }

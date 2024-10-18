@@ -10,22 +10,47 @@
 </head>
 <body>
 	<div id="wrap" class="container">
-		<table class="table text-left">
+		<h1>즐겨찾기 목록</h1>
+		<table class="table text-left" id="bookmarkTable">
 			<thead>
 				<tr>
 					<th>No.</th>
 					<th>이름</th>
 					<th>주소</th>
+					<th>삭제</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="bookmark, status : ${bookmarks}">
 					<td th:text="${status.count}"></td>
 					<td th:text="${bookmark.name}"></td>
-					<td><a th:href="${bookmark.url}" th:text="${bookmark.url}" class="text-dark"></a></td>
+					<td><a th:href="${bookmark.url}" target="_blank" th:text="${bookmark.url}" class="text-dark"></a></td>
+					<td th:class="${bookmark.url}"><button type="button" class="deleteBtn btn btn-danger">삭제</button></td>
 				</tr>	
 			</tbody>
 		</table>	
 	</div>
+	<script>
+		$(document).ready(function() {
+			$(document).on("click", ".deleteBtn", function(e) {
+				let url = e.target.parentElement.className;
+				$.ajax({
+					type:"get"
+					, url:"/lesson06/quiz01/delete-bookmark"
+					, data:{"url":url}
+					, success:function(data) {
+						if (data.is_deleted_bookmark) {
+							$("#bookmarkTable").load(location.href + " #bookmarkTable");
+						} else {
+							alert("즐겨찾기 삭제 실패");							
+						}		
+					}
+					, error:function(e) {
+						alert("즐겨찾기 삭제 실패");
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>

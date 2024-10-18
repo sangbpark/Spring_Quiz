@@ -20,4 +20,18 @@ public class BookmarkBO {
 	public void addBookmark(String name, String url) {
 		bookmarkMapper.insertBookmark(name, url);
 	};
+	
+	public boolean isDuplicatedUrl(String url) {
+		if (bookmarkMapper.isDuplicatedUrl(url) > 0) {
+			return true;
+		}
+		return false;	
+	};
+	
+	public Boolean removeBookmark(String url) {
+		if (bookmarkMapper.deleteBookmark(url) > 0) {
+			return true;
+		}
+		return false;
+	};
 }
