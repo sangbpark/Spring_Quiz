@@ -25,7 +25,7 @@
 					<td th:text="${status.count}"></td>
 					<td th:text="${bookmark.name}"></td>
 					<td><a th:href="${bookmark.url}" target="_blank" th:text="${bookmark.url}" class="text-dark"></a></td>
-					<td th:class="${bookmark.url}"><button type="button" class="deleteBtn btn btn-danger">삭제</button></td>
+					<td><th:block th:class="${bookmark.url}"><button type="button" class="deleteBtn btn btn-danger">삭제</button></th:block></td>
 				</tr>	
 			</tbody>
 		</table>	
