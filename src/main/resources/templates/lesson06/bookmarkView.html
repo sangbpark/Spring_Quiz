@@ -25,14 +25,14 @@
 					<td th:text="${status.count}"></td>
 					<td th:text="${bookmark.name}"></td>
 					<td><a th:href="${bookmark.url}" target="_blank" th:text="${bookmark.url}" class="text-dark"></a></td>
-					<td><th:block th:class="${bookmark.url}"><button type="button" class="deleteBtn btn btn-danger">삭제</button></th:block></td>
+					<td th:class="${bookmark.url}"><button type="button" class="deleteBtn btn btn-danger">삭제</button></td>
 				</tr>	
 			</tbody>
 		</table>	
 	</div>
 	<script>
 		$(document).ready(function() {
-			$(document).on("click", ".deleteBtn", function(e) {
+			$(".deleteBtn").on("click", function(e) {
 				let url = e.target.parentElement.className;
 				$.ajax({
 					type:"get"
@@ -40,7 +40,7 @@
 					, data:{"url":url}
 					, success:function(data) {
 						if (data.is_deleted_bookmark) {
-							$("#bookmarkTable").load(location.href + " #bookmarkTable");
+							 location.reload();
 						} else {
 							alert("즐겨찾기 삭제 실패");							
 						}		
@@ -50,7 +50,7 @@
 					}
 				});
 			});
-		});
+		});		
 	</script>
 </body>
 </html>
