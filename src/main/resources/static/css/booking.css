@@ -5,6 +5,9 @@
     width: 1200px;
 }
 
+a { text-decoration:none !important }
+
+
 header {
     height: 150px;
 }
@@ -65,3 +68,5 @@ header .head-menu {
 .text-size {
     font-size: 30px;
 }
+
+.contents .makeBooking { width: 500px}
