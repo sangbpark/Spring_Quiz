@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,23 +53,23 @@ public class Lesson06Quiz01Controller {
 	}
 	
 	@ResponseBody
-	@GetMapping("/url-Duplicated")
-	public Map<String, Object> isDuplicatedUrl(
+	@PostMapping("/url-duplicate")
+	public Map<String, Object> isDuplicateUrl(
 			@RequestParam("url") String url) {
 		
-		boolean isDuplicatedUrl = bookmarkBO.isDuplicatedUrl(url);
+		boolean isDuplicateUrl = bookmarkBO.isDuplicateUrl(url);
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
-		result.put("is_duplicated_url", isDuplicatedUrl);
+		result.put("is_duplicate_url", isDuplicateUrl);
 		return result;
 	}
 	
 	@ResponseBody
-	@GetMapping("/delete-bookmark")
-	public Map<String, Object> afterAddBookmarkView(
-			@RequestParam("url") String url) {
+	@DeleteMapping("/delete-bookmark")
+	public Map<String, Object> deleteBookmark(
+			@RequestParam("id") int id) {
 		
-		boolean isDeleted = bookmarkBO.removeBookmark(url);
+		boolean isDeleted = bookmarkBO.deleteBookmarkById(id);
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
 		result.put("is_deleted_bookmark", isDeleted);

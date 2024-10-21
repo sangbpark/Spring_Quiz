@@ -33,20 +33,24 @@
 	
 	</insert>
 	
-	<delete id="deleteBookmark"
-			parameterType="string"
+	<delete id="deleteBookmarkById"
+			parameterType="int"
 			>
 		DELETE FROM 
 			`bookmark`
 		WHERE
-			`url` = #{url}
+			`id` = #{id}
 	</delete>
 	
-	<select id="isDuplicatedUrl" 
+	<select id="selectBookmarkByUrl" 
  			parameterType="string"
- 			resultType="int">
+ 			resultType="com.quiz.lesson06.domain.Bookmark">
  		SELECT
- 			COUNT(*)
+ 			`id`
+			,`name`
+			,`url`
+			,`createdAt`
+			,`updatedAt`
  		FROM
  			`bookmark`
  		WHERE

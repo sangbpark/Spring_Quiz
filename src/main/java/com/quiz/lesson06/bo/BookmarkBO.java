@@ -21,15 +21,14 @@ public class BookmarkBO {
 		bookmarkMapper.insertBookmark(name, url);
 	};
 	
-	public boolean isDuplicatedUrl(String url) {
-		if (bookmarkMapper.isDuplicatedUrl(url) > 0) {
-			return true;
-		}
-		return false;	
+	public boolean isDuplicateUrl(String url) {
+		List<Bookmark> bookmarkList = bookmarkMapper.selectBookmarkByUrl(url);
+		
+		return bookmarkList.isEmpty() == false;
 	};
 	
-	public Boolean removeBookmark(String url) {
-		if (bookmarkMapper.deleteBookmark(url) > 0) {
+	public Boolean deleteBookmarkById(int id) {
+		if (bookmarkMapper.deleteBookmarkById(id) > 0) {
 			return true;
 		}
 		return false;

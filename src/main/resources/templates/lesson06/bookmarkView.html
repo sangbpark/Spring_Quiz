@@ -17,7 +17,7 @@
 					<th>No.</th>
 					<th>이름</th>
 					<th>주소</th>
-					<th>삭제</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -25,24 +25,29 @@
 					<td th:text="${status.count}"></td>
 					<td th:text="${bookmark.name}"></td>
 					<td><a th:href="${bookmark.url}" target="_blank" th:text="${bookmark.url}" class="text-dark"></a></td>
-					<td th:class="${bookmark.url}"><button type="button" class="deleteBtn btn btn-danger">삭제</button></td>
+					<td>
+						<!-- value에 id넣기 -->
+						<!-- <input type="hidden"> -->
+						<!-- data-소문자만 가능 -->
+						<button type="button" class="deleteBtn btn btn-danger" th:data-bookmark-id="${bookmark.id}" th:data-bookmark-url="${bookmark.url}">삭제</button>
+					</td>
 				</tr>	
 			</tbody>
 		</table>	
 	</div>
 	<script>
 		$(document).ready(function() {
-			$(".deleteBtn").on("click", function(e) {
-				let url = e.target.parentElement.className;
+			$(".deleteBtn").on("click", function() {
+				let id = $(this).data("bookmark-id");
 				$.ajax({
-					type:"get"
+					type:"delete"
 					, url:"/lesson06/quiz01/delete-bookmark"
-					, data:{"url":url}
+					, data:{"id":id}
 					, success:function(data) {
 						if (data.is_deleted_bookmark) {
-							 location.reload();
+							location.reload();
 						} else {
-							alert("즐겨찾기 삭제 실패");							
+							alert(data.error_message);							
 						}		
 					}
 					, error:function(e) {

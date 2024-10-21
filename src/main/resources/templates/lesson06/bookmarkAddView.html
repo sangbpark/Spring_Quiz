@@ -18,38 +18,36 @@
 		<div class="form-group">
 			<label for="url">주소</label>
 			<div class="d-flex justify-content-between">
-				<input type="text" class="form-control col-10" id="url">
+				<input type="text" class="form-control col-11" id="url">
 				<button type="button" id="urlCheckBtn" class="btn btn-info">중복확인</button>
 			</div>
+			<small id="duplicatedText" class="text-danger d-none">중복된 URL 입니다.</small>
+			<small id="availableText" class="text-success d-none">저장 가능한 URL 입니다.</small>
 		</div>
-		<small id="urlStatusArea"></small>
 		<input type="button" id="joinBtn" class="btn btn-success mt-2 btn-block" value="추가">
 	</div>
 	
 	<script>
 		$(document).ready(function() {
-			$("#urlCheckBtn").on("click", function() {
-				$("#urlStatusArea").removeClass();
-				
-				$("#urlStatusArea").empty();
-				
+			$("#urlCheckBtn").on("click", function() {		
 				let url = $("#url").val().trim();
 				
 				if (!url) {
-					$("#urlStatusArea").append('<span class="text-danger">주소가 비어있습니다.</span>')
+					alert("주소를 입력하세요");
 					return;
 				}
 				
 				$.ajax({
-					type:"get"
-					, url:"/lesson06/quiz01/url-Duplicated"
+					type:"post"
+					, url:"/lesson06/quiz01/url-duplicate"
 					, data:{"url":url}
 					, success:function(data) {
-						if (data.is_duplicated_url) {
-							$("#urlStatusArea").append('<span class="text-danger">중복된 주소입니다.</span>')
+						if (data.is_duplicate_url) {
+							$("#duplicatedText").removeClass("d-none");
+							$("#availableText").addClass("d-none");
 						} else {
-							$("#urlStatusArea").removeClass()
-							$("#urlStatusArea").addClass("true")
+							$("#availableText").removeClass("d-none");
+							$("#duplicatedText").addClass("d-none");
 						}
 					}
 					, error:function(e) {
@@ -77,8 +75,8 @@
 					return;
 				}
 				
-				if ($("#urlStatusArea").hasClass("true") == 0) {
-					alert("주소가 중복인지 확인하세요.");
+				if ($("#availableText").hasClass("d-none")) {
+					alert("주소 중복확인을 해주세요.");
 					return;
 				}
 				console.log(name);
