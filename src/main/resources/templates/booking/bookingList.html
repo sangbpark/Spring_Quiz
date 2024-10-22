@@ -50,10 +50,11 @@
 						<td th:text="${booking.headcount}"></td>
 						<td th:text="${booking.phoneNumber}"></td>
 						<td>
-							<span th:if="${booking.state == '대기중'}" class="text-info"  th:text="${booking.state}"></span>
-							<span th:unless="${booking.state == '대기중'}" class="text-success"  th:text="${booking.state}"></span>
+							<span th:if="${booking.state == '대기중'}" class="text-info">대기중</span>
+							<span th:if="${booking.state == '확정'}" class="text-success">확정</span>
+							<span th:if="${booking.state == '취소'}" class="text-danger">취소</span>
 						</td>
-						<td><button type="button" class="deleteBtn btn btn-danger" th:data-booking-id="${booking.id}">삭제</button></td>
+						<td><button type="button" class="del-btn btn btn-danger" th:data-booking-id="${booking.id}">삭제</button></td>
 					</tr>	
 				</tbody>
 			</table>
@@ -69,7 +70,7 @@
     
     <script>
     	$(document).ready(function() {
-    		$(".deleteBtn").on("click", function() {
+    		$(".del-btn").on("click", function() {
     			let id = $(this).data("booking-id");
     			
     			$.ajax({
@@ -77,14 +78,15 @@
         			, url:"/booking/delete-booking"
         			, data:{"id":id}
     				, success:function(data) {
-    					if (data.is_deleted_booking) {
+    					if (data.code == 200) {
+    						alert("삭제되었습니다.");
     						location.reload();
-    					} else {
+    					} else if (data.code == 500){
     						alert(data.error_message);
     					}   					
     				}
     				, error:function(e) {
-    					alert(e.error_message);
+    					alert("삭제하는데 실패했습니다.");
     				}
         		});
     		});

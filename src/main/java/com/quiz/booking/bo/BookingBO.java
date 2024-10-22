@@ -25,7 +25,12 @@ public class BookingBO {
 	};
 	
 	public boolean addBooking(String name, int headcount, LocalDate date
-			, int day, String phoneNumber, String state) {
-		return bookingMapper.insertBooking(name, headcount, date, day, phoneNumber, state) > 0 ? true : false;
+			, int day, String phoneNumber) {
+		return bookingMapper.insertBooking(name, headcount, date, day, phoneNumber) > 0 ? true : false;
+	};
+	
+	public Booking getLatestBookingByNameAndPhoneNumber(String name, String phoneNumber) {
+		List<Booking> bookingList = bookingMapper.selectBookingListByNameAndPhoneNumber(name, phoneNumber);
+		return bookingList.isEmpty() ? null : bookingList.get(bookingList.size() - 1);
 	};
 }

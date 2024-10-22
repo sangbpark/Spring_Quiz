@@ -48,8 +48,13 @@ public class BookingController {
 		
 		boolean isDelete = bookingBO.deleteBookingById(id);
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 200);
-		result.put("is_deleted_booking", isDelete);
+		if (isDelete) {
+			result.put("code", 200);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "삭제할 대상이 없습니다.");			
+		}
 		return result;
 	}
 	
@@ -60,13 +65,35 @@ public class BookingController {
 			@RequestParam("headcount") int headcount,
 			@RequestParam("date") LocalDate date,
 			@RequestParam("day") int day,
-			@RequestParam("phoneNumber") String phoneNumber,
-			@RequestParam(value = "state", defaultValue = "대기중" ) String state ){
+			@RequestParam("phoneNumber") String phoneNumber){
 		
-		boolean isSuccess = bookingBO.addBooking(name, headcount, date, day, phoneNumber, state);
+		boolean isSuccess = bookingBO.addBooking(name, headcount, date, day, phoneNumber);
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 200);
-		result.put("is-inert-booking", isSuccess);
+		if (isSuccess) {
+			result.put("code", 200);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "예약에 실패했습니다.");
+		}
 		return result;
 	};
+	
+	@ResponseBody
+	@PostMapping("/search-booking")
+	public Map<String, Object> getBookingListByNameAndPhoneNumber(
+			@RequestParam("name") String name,
+			@RequestParam("phoneNumber") String phoneNumber) {
+		
+		Booking booking = bookingBO.getLatestBookingByNameAndPhoneNumber(name, phoneNumber);
+		Map<String, Object> result = new HashMap<>();
+		if (booking != null) {
+			result.put("code", 200);
+			result.put("booking", booking);
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "예약이 없습니다.");
+		}
+		return result;
+	}
 }

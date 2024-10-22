@@ -41,10 +41,6 @@ header .head-menu {
     color:white;
 }
 
-.nav-item > .nav-link:hover {
-    color: blue;
-} 
-
 .contents .book {
     background-color: chocolate;
 }

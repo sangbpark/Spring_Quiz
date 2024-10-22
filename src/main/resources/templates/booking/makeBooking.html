@@ -51,7 +51,7 @@
 	        		<label for="phoneNumber">전화번호</label>
 	        		<input type="text" id="phoneNumber" class="form-control">
 	        	</div>
-	        	<button type="button" id="del-Btn" class="btn btn-warning btn-block">예약하기</button>
+	        	<button type="button" id="insert-Btn" class="btn btn-warning btn-block">예약하기</button>
       		</div>
         </section>
         <footer class="copyright d-flex align-items-center">
@@ -68,7 +68,7 @@
     		$.datepicker.setDefaults({
                  dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] // 요일을 한글로 변경
                  , dateFormat: 'yy-mm-dd'
-                 , minDate: new Date()
+                 , minDate: 0
 			  	 , changeMonth: true
 			 	 , changeYear: true          
 			 	 , showMonthAfterYear: true
@@ -78,7 +78,7 @@
 				  
 			});
 			  
-    		$("#del-Btn").on("click", function() {
+    		$("#insert-Btn").on("click", function() {
     			let name = $("#name").val().trim();
     			let date = $("#date").val().trim();
     			let day = $("#day").val().trim();
@@ -91,11 +91,11 @@
     				return;
     			};
     			if (!date) {
-    				alert("날짜를 입력해주세요.");
+    				alert("날짜를 선택해주세요.");
     				return;
     			};
     			if (!day) {
-    				alert("숙박일수를 입력해주세요.");
+    				alert("숙박일을 입력해주세요.");
     				return;
     			};
     			if (!headcount) {
@@ -110,7 +110,7 @@
     				alert("번호를 확인해주세요.");
     				
     			};
-    			phoneNumber = phoneNumber.replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
+    			phoneNumber = phoneNumber.replace(/(^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
     			
     			$.ajax({
     				type:"post"
@@ -119,12 +119,12 @@
     				, success:function(data) {
     					if (data.code == 200) {
     						location.href="/booking/booking-list-view";
-    					} else {
+    					} else if (data.code == 500){
     						alert(data.error_message);
     					}
        				}
-    				, error:function(e){
-    					alert(e.error_message);
+    				, error:function(e) {
+    					alert("예약하는데 실패했습니다.");
     				}
     			});
     		}); 
