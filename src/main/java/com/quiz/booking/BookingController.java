@@ -89,10 +89,10 @@ public class BookingController {
 		Map<String, Object> result = new HashMap<>();
 		if (booking != null) {
 			result.put("code", 200);
-			result.put("booking", booking);
+			result.put("result", booking);
 		} else {
 			result.put("code", 500);
-			result.put("error_message", "예약이 없습니다.");
+			result.put("error_message", "예약 내역이 없습니다.");
 		}
 		return result;
 	}
