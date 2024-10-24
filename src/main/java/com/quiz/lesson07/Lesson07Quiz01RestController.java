@@ -27,4 +27,15 @@ public class Lesson07Quiz01RestController {
 		int headcount = 6834;
 		return companyBO.addCompany(name, business, scale, headcount);
 	}
+	
+	@GetMapping("/update")
+	public CompanyEntity update() {
+		return companyBO.updateCompanyById(6, "중소기업", 37);
+	}
+	
+	@GetMapping("/delete")
+	public String delete() {
+		companyBO.deleteCompanyById(8);
+		return "성공";
+	}
 }
