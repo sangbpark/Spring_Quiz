@@ -1,5 +1,6 @@
 package com.quiz.lesson07;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class Lesson07Quiz02RestController {
 	
 	@GetMapping("/4")
 	public List<RecruitEntity> select4() {
-		return recuritRepository.findByTypeAndSalaryGreaterThanEqual("정규직", 7000);
+		return recuritRepository.findByTypeOrSalaryGreaterThanEqual("정규직", 9000);
 	}
 	
 	@GetMapping("/5")
@@ -46,5 +47,11 @@ public class Lesson07Quiz02RestController {
 	@GetMapping("/6")
 	public List<RecruitEntity> select6() {
 		return recuritRepository.findByRegionAndSalaryBetween("성남시 분당구", 7000, 8500);
+	}
+	
+	@GetMapping("/7")
+	public List<RecruitEntity> select7() {
+		// return recuritRepository.findByDeadlineAndSalaryAndType("2026-04-10", 8100, "정규직");
+		return recuritRepository.findByDeadlineAfterAndSalaryGreaterThanEqualAndTypeOrderBySalaryDesc(LocalDate.of(2026, 04, 10), 8100, "정규직");
 	}
 }
